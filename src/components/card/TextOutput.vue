@@ -24,8 +24,19 @@
                     <input type="radio" value="right" id="textRight" class="form-check-input" v-model="setTextAlign"> Right
                 </label> 
             </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" id="textBold" v-model="setBold"> Bold
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" id="textItalic" v-model="setItalic"> Italic
+                </label>
+            </div>
         </form>
-        <p :style="styleObject">
+        <p :style="styleObject" 
+           :class="{ bold: setBold, italic: setItalic}">
             {{ displayText }}
         </p>
     </div>
@@ -44,7 +55,9 @@ export default {
         return {
             showOptions: false,
             setFontSize: '',
-            setTextAlign: ''
+            setTextAlign: '',
+            setBold: false,
+            setItalic: false
         }
     },
     computed: {
@@ -73,5 +86,26 @@ export default {
     }
     .custom-select {
         width: 20%;
+    }
+
+    .form-check-inline {
+        margin-right: 0.35rem;
+    }
+    .bold {
+        font-weight: bold;
+    }
+    .italic {
+        font-style: italic;
+    }
+
+    form {
+        position: absolute;
+        border-bottom: 1px dotted grey;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        padding-bottom: 5px;
+    }
+    select {
+        height: 40%;
     }
 </style>

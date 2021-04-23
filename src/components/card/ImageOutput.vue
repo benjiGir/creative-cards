@@ -1,6 +1,15 @@
 <template>
-    <div class="img-container" :style="styleObject">
-        <img id="outputImage">{{ displayImage }}
+    <div class="img-container"
+         :style="styleObject" 
+         @mouseover="showOptions = true" 
+         @mouseleave="showOptions = false">
+
+        <button type="button" 
+                class="btn btn-outline-danger btn-sm" 
+                v-show="showOptions"
+                @click="clearImageProp">Remove Image</button>
+
+        <img id="outputImage" >{{ displayImage }}
     </div>
 </template>
 
@@ -15,6 +24,12 @@ export default {
         containerHeight: {
             type: Number,
             default: 200
+        },
+        clearImageProp: Function
+    },
+    data: function() {
+        return {
+            showOptions: false
         }
     },
     watch:{
@@ -24,6 +39,7 @@ export default {
                 .then((url) => {
                     let img = document.getElementById('outputImage')
                     img.src = url
+                    setDraggable();
                 })
         }
     },
@@ -35,6 +51,10 @@ export default {
         }
     }
 }
+
+function setDraggable() {
+    $('#outputImage').draggable();
+}
 </script>
 
 <style>
@@ -43,5 +63,9 @@ export default {
         overflow: hidden;
         margin: 5px 0;
 
+    }
+    button {
+        position: absolute;
+        z-index: 1;
     }
 </style>
