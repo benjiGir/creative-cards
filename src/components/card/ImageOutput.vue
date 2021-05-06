@@ -3,13 +3,16 @@
          :style="styleObject" 
          @mouseover="showOptions = true" 
          @mouseleave="showOptions = false">
+        <transition 
+            enter-active-class="custom-enter-active"
+            leave-active-class="custom-leave-active">
+            <button type="button" 
+                    class="btn btn-outline-danger btn-sm" 
+                    v-show="showOptions"
+                    @click="clearImageProp">Remove Image</button>
 
-        <button type="button" 
-                class="btn btn-outline-danger btn-sm" 
-                v-show="showOptions"
-                @click="clearImageProp">Remove Image</button>
-
-        <img id="outputImage" >{{ displayImage }}
+            <img id="outputImage" >{{ displayImage }}
+        </transition>
     </div>
 </template>
 
@@ -64,8 +67,13 @@ function setDraggable() {
         margin: 5px 0;
 
     }
+
     button {
         position: absolute;
         z-index: 1;
+    }
+
+    img {
+        width: 130%;
     }
 </style>

@@ -3,10 +3,27 @@
     <div class="row">
       <div class="col-sm-12">
         <nav-header @pageWasChanged="currentPage = $event"></nav-header>
-        <keep-alive>
-          <component :is="currentPage"></component>
-        </keep-alive>
+        <div id="instructions" class="text-center italic">
+          <div class="row">
+            <div class="col-sm-6">
+              <p><em>&larr; Make changes in the edit card area below</em></p>
+            </div>
+            <div class="col-sm-6">
+              <p><em>And they will show on the cart &rarr;</em></p>
+            </div>
+          </div>
+        </div>
+        <transition
+          appear 
+          name="fade" 
+          mode="out-in"
+          @enter="enter">
+          <keep-alive>
+            <component :is="currentPage"></component>
+          </keep-alive>
+        </transition>
         <cc-footer>
+
           <p class="text-center" slot="app-name">&copy; {{ appName }}</p>
           <nav>
             <ul class="nav justify-content-center">
@@ -36,6 +53,11 @@ export default {
       appName: 'Creative Cards'
     }
   },
+  methods: {
+    enter: function(el) {
+      document.getElementById('instructions').style.display = "none";
+    }
+  },
   components: {
     navHeader: Header,
     cardFront: CardFront,
@@ -52,7 +74,38 @@ export default {
     font-family: Verdana, Geneva, sans-serif;
     color: #333
   }
+
   a {
     cursor: pointer;
+  }
+
+  .fade-enter, .fade-leave-to {
+        opacity: 0;
+  }
+
+  .fade-enter-active {
+      transition: opacity .7s;
+  }
+
+  .fade-leave-active {
+      transition: opacity .7s;
+  }
+
+  .custom-enter-active {
+        animation: scale-in 0.5s;
+  }
+
+  .custom-leave-active {
+      animation: scale-out 0.5s;
+  }
+
+  @keyframes scale-in{
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
+  }
+
+  @keyframes scale-out {
+      0% { transform: scale(1); }
+      100% { transform: scale(0); }
   }
 </style>
